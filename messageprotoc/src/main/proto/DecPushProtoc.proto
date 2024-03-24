@@ -1,0 +1,125 @@
+syntax = "proto3";
+
+
+option java_package = "apps.netty.server.protoc";
+option java_outer_classname = "DecPushProtoc";
+
+message PushPojo {
+     Type type =1;
+     DeviceRegistration deviceRegistration =2;
+     DeviceOnline deviceOnline=3;
+     DeviceOffline deviceOffline=4;
+     DeviceBinding deviceBinding=5;
+      
+     PushMessage pushMessage=6;
+     PushMessageReceipt pushMessageReceipt=7;
+	      
+     DeviceRegistrationResult deviceRegistrationResult=8;
+     DeviceOnLineResult deviceOnLineResult=9;
+     DeviceOffLineResult deviceOffLineResult=10;
+     DeviceBindingResult deviceBindingResult=11;
+     HeartBeat heartBeat=12;
+     ConnectionResult connectionResult = 13;
+}
+
+enum Type {
+	      HEART_BEAT =0;
+	      DEVICE_REGISTRATION =1;
+	      DEVICE_REGISTRATION_RESULT=2;
+	      DEVICE_ONLINE=3;
+	      DEVICE_OFFLINE=4;
+	      DEVICE_ONLINE_RESULT=5;
+	      DEVICE_OFFLINE_RESULT=6;
+	      PUSH_MESSAGE=7;
+	      PUSH_MESSAGE_RECEIPT=8;
+	      DEVICE_BINDING = 9;
+	      DEVICE_BINDING_RESULT = 10;
+	      CONNECTION_RESULT = 11;
+}
+
+message DeviceRegistration {
+    string imei=1;
+    string deviceId=2;
+    string appKey=3;
+    string appPackage=4;
+    string deviceType=5;
+    string alias=6;
+    string tag=7; 
+}
+
+message DeviceBinding {
+    string deviceId=1;
+    string registrationId=2;
+    string alias=3;
+    string tag=4; 
+}
+
+message HeartBeat {
+    string deviceId=1;
+}
+
+message DeviceBindingResult {
+    string deviceId=1;
+    string registrationId=2;
+    string alias=3;
+    ResultCode resultCode=4;
+    string errorCode=5;
+    string errorMessage=6;
+}
+
+message DeviceRegistrationResult {
+    string appKey=1;
+    string appPackage=2;
+    string registrationId=3;
+    string errorCode=4;
+    string errorMessage=5;
+    
+    ResultCode resultCode=6;
+}
+	
+message PushMessage {
+    string title=1;
+    bytes content=2;
+    int32 messageType=3;
+    bool isNeedReceipt=4;
+    string msgId=5;
+}
+
+message PushMessageReceipt {
+    string appKey=1;
+    string registrationId=2;
+    string msgId=3;
+    string deviceId=4;
+} 
+
+enum ResultCode {
+	    SUCCESS = 0;
+	    FAILED = 1;
+}
+
+message DeviceOnLineResult {
+    string deviceId=1;
+    ResultCode resultCode=2;
+    string errorCode=3;
+    string errorMessage=4;
+}
+
+message DeviceOffLineResult {
+    string deviceId=1;
+    ResultCode resultCode=2;
+    string errorCode=3;
+    string errorMessage=4;
+}
+
+message ConnectionResult {
+    ResultCode resultCode=1;
+    string errorMessage=2;
+}
+
+message DeviceOnline {
+    string deviceId=1;
+}
+
+message DeviceOffline {
+    string deviceId=1;
+}
